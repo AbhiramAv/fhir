@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { oauth2 as SMART } from 'fhirclient';
-import formTemplate from './formTemplate.json'
-import QRForm from './QRForm';
 
 const PatientInfo = () => {
     const [code, setCode] = useState("");
@@ -92,26 +90,6 @@ const PatientInfo = () => {
         });
     };
 
-    const submitForm = async (filledForm) => {
-        try {
-            const response = await axios.post(
-                'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/QuestionnaireResponse',
-                filledForm,  // Assuming filledForm is correctly structured for FHIR
-                {
-                    headers: {
-                        'Content-Type': 'application/fhir+json',
-                        'Authorization': `Bearer ${accessToken}`
-                    }
-                }
-            );
-            console.log('Submission response:', response.data);
-            alert('Form submitted successfully!');
-        } catch (error) {
-            console.error('Error submitting form:', error.response ? error.response.data : error);
-            alert('Failed to submit form.');
-        }
-    };
-
     return (
         <div className="container">
             <div style={{ textAlign: 'center' }}>
@@ -195,7 +173,6 @@ const PatientInfo = () => {
                     )}
 
                     <h2> Form </h2>
-                    <QRForm formToAdd={formTemplate} onSubmit={submitForm} />
                 </div>
             )}
         </div>

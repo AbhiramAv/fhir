@@ -1,0 +1,1188 @@
+{
+    "code": [
+      {
+        "code": "97023-6",
+        "display": "Accountable health communities (AHC) health-related social needs (HRSN) supplemental questions",
+        "system": "http://loinc.org"
+      }
+    ],
+    "title": "Accountable health communities (AHC) health-related social needs (HRSN) supplemental questions",
+    "resourceType": "Questionnaire",
+    "status": "draft",
+    "meta": {
+      "profile": [
+        "http://hl7.org/fhir/4.0/StructureDefinition/Questionnaire"
+      ],
+      "tag": [
+        {
+          "code": "lformsVersion: 36.1.3"
+        }
+      ]
+    },
+    "item": [
+      {
+        "type": "choice",
+        "code": [
+          {
+            "code": "76513-1",
+            "display": "How hard is it for you to pay for the very basics like food, housing, medical care, and heating?",
+            "system": "http://loinc.org"
+          }
+        ],
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "drop-down",
+                  "display": "Drop down"
+                }
+              ],
+              "text": "Drop down"
+            }
+          }
+        ],
+        "linkId": "/76513-1",
+        "text": "How hard is it for you to pay for the very basics like food, housing, medical care, and heating?",
+        "answerOption": [
+          {
+            "valueCoding": {
+              "code": "LA15832-1",
+              "display": "Very hard",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA22683-9",
+              "display": "Somewhat hard",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA31980-8",
+              "display": "Not hard at all",
+              "system": "http://loinc.org"
+            }
+          }
+        ],
+        "item": [
+          {
+            "text": "A single-item question used to determine the patient's overall financial resource strain. Patients are asked to select one answer (very hard, hard, somewhat hard, or not very hard). This single question has been found to be a valid measure of general financial resource strain. [PMID: 23969421] (PMID: 19189781] Evidence from the CARDIA study demonstrated the value of measuring the difficulty of paying for basics over time (e.g., financial resource strain), because there appeared to be a cumulative effect (e.g., incident hypertension).",
+            "type": "display",
+            "linkId": "/76513-1-help",
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueCodeableConcept": {
+                  "text": "Help-Button",
+                  "coding": [
+                    {
+                      "code": "help",
+                      "display": "Help-Button",
+                      "system": "http://hl7.org/fhir/questionnaire-item-control"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "choice",
+        "code": [
+          {
+            "code": "96780-2",
+            "display": "Do you want help finding or keeping work or a job?",
+            "system": "http://loinc.org"
+          }
+        ],
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "drop-down",
+                  "display": "Drop down"
+                }
+              ],
+              "text": "Drop down"
+            }
+          }
+        ],
+        "linkId": "/96780-2",
+        "text": "Do you want help finding or keeping work or a job?",
+        "answerOption": [
+          {
+            "valueCoding": {
+              "code": "LA31981-6",
+              "display": "Yes, help finding work",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA31982-4",
+              "display": "Yes, help keeping work",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA31983-2",
+              "display": "I do not need or want help",
+              "system": "http://loinc.org"
+            }
+          }
+        ]
+      },
+      {
+        "type": "choice",
+        "code": [
+          {
+            "code": "96781-0",
+            "display": "If for any reason you need help with day-to-day activities such as bathing, preparing meals, shopping, managing finances, etc., do you get the help you need?",
+            "system": "http://loinc.org"
+          }
+        ],
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "drop-down",
+                  "display": "Drop down"
+                }
+              ],
+              "text": "Drop down"
+            }
+          }
+        ],
+        "linkId": "/96781-0",
+        "text": "If for any reason you need help with day-to-day activities such as bathing, preparing meals, shopping, managing finances, etc., do you get the help you need?",
+        "answerOption": [
+          {
+            "valueCoding": {
+              "code": "LA31976-6",
+              "display": "I don't need any help",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA31977-4",
+              "display": "I get all the help I need",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA31978-2",
+              "display": "I could use a little more help",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA31979-0",
+              "display": "I need a lot more help",
+              "system": "http://loinc.org"
+            }
+          }
+        ]
+      },
+      {
+        "type": "choice",
+        "code": [
+          {
+            "code": "93159-2",
+            "display": "How often do you feel lonely or isolated from those around you?",
+            "system": "http://loinc.org"
+          }
+        ],
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "drop-down",
+                  "display": "Drop down"
+                }
+              ],
+              "text": "Drop down"
+            }
+          }
+        ],
+        "linkId": "/93159-2",
+        "text": "How often do you feel lonely or isolated from those around you?",
+        "answerOption": [
+          {
+            "valueCoding": {
+              "code": "LA6270-8",
+              "display": "Never",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA10066-1",
+              "display": "Rarely",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA10082-8",
+              "display": "Sometimes",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA10044-8",
+              "display": "Often",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA9933-8",
+              "display": "Always",
+              "system": "http://loinc.org"
+            }
+          }
+        ]
+      },
+      {
+        "type": "choice",
+        "code": [
+          {
+            "code": "97027-7",
+            "display": "Do you speak a language other than English at home?",
+            "system": "http://loinc.org"
+          }
+        ],
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "drop-down",
+                  "display": "Drop down"
+                }
+              ],
+              "text": "Drop down"
+            }
+          }
+        ],
+        "linkId": "/97027-7",
+        "text": "Do you speak a language other than English at home?",
+        "answerOption": [
+          {
+            "valueCoding": {
+              "code": "LA33-6",
+              "display": "Yes",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA32-8",
+              "display": "No",
+              "system": "http://loinc.org"
+            }
+          }
+        ]
+      },
+      {
+        "type": "choice",
+        "code": [
+          {
+            "code": "96782-8",
+            "display": "Do you want help with school or training? For example, starting or completing job training or getting a high school diploma, GED or equivalent.",
+            "system": "http://loinc.org"
+          }
+        ],
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "drop-down",
+                  "display": "Drop down"
+                }
+              ],
+              "text": "Drop down"
+            }
+          }
+        ],
+        "linkId": "/96782-8",
+        "text": "Do you want help with school or training? For example, starting or completing job training or getting a high school diploma, GED or equivalent.",
+        "answerOption": [
+          {
+            "valueCoding": {
+              "code": "LA33-6",
+              "display": "Yes",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA32-8",
+              "display": "No",
+              "system": "http://loinc.org"
+            }
+          }
+        ]
+      },
+      {
+        "type": "choice",
+        "code": [
+          {
+            "code": "89555-7",
+            "display": "In the last 30 days, other than the activities you did for work, on average, how many days per week did you engage in moderate exercise (like walking fast, running, jogging, dancing, swimming, biking, or other similar activities)?",
+            "system": "http://loinc.org"
+          }
+        ],
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "drop-down",
+                  "display": "Drop down"
+                }
+              ],
+              "text": "Drop down"
+            }
+          }
+        ],
+        "linkId": "/89555-7",
+        "text": "In the last 30 days, other than the activities you did for work, on average, how many days per week did you engage in moderate exercise (like walking fast, running, jogging, dancing, swimming, biking, or other similar activities)?",
+        "answerOption": [
+          {
+            "valueCoding": {
+              "code": "LA6111-4",
+              "display": "0",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA6112-2",
+              "display": "1",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA6113-0",
+              "display": "2",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA6114-8",
+              "display": "3",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA6115-5",
+              "display": "4",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA10137-0",
+              "display": "5",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA10138-8",
+              "display": "6",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA10139-6",
+              "display": "7",
+              "system": "http://loinc.org"
+            }
+          }
+        ],
+        "item": [
+          {
+            "text": "Moderate to strenuous physical activity includes walking fast, running, jogging, dancing, swimming, biking, or other activities that cause a light or heavy sweat. This term was reviewed and validated by Kaiser Permanente to be used to represent the Exercise Vital Sign (EVS).",
+            "type": "display",
+            "linkId": "/89555-7-help",
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueCodeableConcept": {
+                  "text": "Help-Button",
+                  "coding": [
+                    {
+                      "code": "help",
+                      "display": "Help-Button",
+                      "system": "http://hl7.org/fhir/questionnaire-item-control"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "choice",
+        "code": [
+          {
+            "code": "68516-4",
+            "display": "On average, how many minutes did you usually spend exercising at this level on one of those days?",
+            "system": "http://loinc.org"
+          }
+        ],
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "drop-down",
+                  "display": "Drop down"
+                }
+              ],
+              "text": "Drop down"
+            }
+          }
+        ],
+        "linkId": "/68516-4",
+        "text": "On average, how many minutes did you usually spend exercising at this level on one of those days?",
+        "answerOption": [
+          {
+            "valueCoding": {
+              "code": "LA6111-4",
+              "display": "0",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA13942-0",
+              "display": "10",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA19282-5",
+              "display": "20",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA28855-7",
+              "display": "30",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA28858-1",
+              "display": "40",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA28854-0",
+              "display": "50",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA28853-2",
+              "display": "60",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA28891-2",
+              "display": "90",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA32059-0",
+              "display": "120",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA32060-8",
+              "display": "150 or greater",
+              "system": "http://loinc.org"
+            }
+          }
+        ]
+      },
+      {
+        "type": "choice",
+        "code": [
+          {
+            "code": "68517-2",
+            "display": "How many times in the past 12 months have you had 5 or more drinks in a day (males) or 4 or more drinks in a day (females)?",
+            "system": "http://loinc.org"
+          }
+        ],
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "drop-down",
+                  "display": "Drop down"
+                }
+              ],
+              "text": "Drop down"
+            }
+          }
+        ],
+        "linkId": "/68517-2",
+        "text": "How many times in the past 12 months have you had 5 or more drinks in a day (males) or 4 or more drinks in a day (females)?",
+        "answerOption": [
+          {
+            "valueCoding": {
+              "code": "LA6270-8",
+              "display": "Never",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA26460-8",
+              "display": "Once or twice",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA18876-5",
+              "display": "Monthly",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA18891-4",
+              "display": "Weekly",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA18934-2",
+              "display": "Daily or almost daily",
+              "system": "http://loinc.org"
+            }
+          }
+        ],
+        "item": [
+          {
+            "text": "Where X is 5 for men and 4 for women, and a response of  greater than, or equal to, 1 is positive.",
+            "type": "display",
+            "linkId": "/68517-2-help",
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                "valueCodeableConcept": {
+                  "text": "Help-Button",
+                  "coding": [
+                    {
+                      "code": "help",
+                      "display": "Help-Button",
+                      "system": "http://hl7.org/fhir/questionnaire-item-control"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "choice",
+        "code": [
+          {
+            "code": "96842-0",
+            "display": "How often have you used any tobacco product in past 12 months?",
+            "system": "http://loinc.org"
+          }
+        ],
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "drop-down",
+                  "display": "Drop down"
+                }
+              ],
+              "text": "Drop down"
+            }
+          }
+        ],
+        "linkId": "/96842-0",
+        "text": "How often have you used any tobacco product in past 12 months?",
+        "answerOption": [
+          {
+            "valueCoding": {
+              "code": "LA6270-8",
+              "display": "Never",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA26460-8",
+              "display": "Once or twice",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA18876-5",
+              "display": "Monthly",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA18891-4",
+              "display": "Weekly",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA18934-2",
+              "display": "Daily or almost daily",
+              "system": "http://loinc.org"
+            }
+          }
+        ]
+      },
+      {
+        "type": "choice",
+        "code": [
+          {
+            "code": "95530-2",
+            "display": "How many times in the past year have you used prescription drugs for non-medical reasons?",
+            "system": "http://loinc.org"
+          }
+        ],
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "drop-down",
+                  "display": "Drop down"
+                }
+              ],
+              "text": "Drop down"
+            }
+          }
+        ],
+        "linkId": "/95530-2",
+        "text": "How many times in the past year have you used prescription drugs for non-medical reasons?",
+        "answerOption": [
+          {
+            "valueCoding": {
+              "code": "LA6270-8",
+              "display": "Never",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA26460-8",
+              "display": "Once or twice",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA18876-5",
+              "display": "Monthly",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA18891-4",
+              "display": "Weekly",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA18934-2",
+              "display": "Daily or almost daily",
+              "system": "http://loinc.org"
+            }
+          }
+        ]
+      },
+      {
+        "type": "choice",
+        "code": [
+          {
+            "code": "68524-8",
+            "display": "How many times in the past year have you used illegal drugs?",
+            "system": "http://loinc.org"
+          }
+        ],
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "drop-down",
+                  "display": "Drop down"
+                }
+              ],
+              "text": "Drop down"
+            }
+          }
+        ],
+        "linkId": "/68524-8",
+        "text": "How many times in the past year have you used illegal drugs?",
+        "answerOption": [
+          {
+            "valueCoding": {
+              "code": "LA6270-8",
+              "display": "Never",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA26460-8",
+              "display": "Once or twice",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA18876-5",
+              "display": "Monthly",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA18891-4",
+              "display": "Weekly",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA18934-2",
+              "display": "Daily or almost daily",
+              "system": "http://loinc.org"
+            }
+          }
+        ]
+      },
+      {
+        "type": "choice",
+        "code": [
+          {
+            "code": "44250-9",
+            "display": "Little interest or pleasure in doing things?",
+            "system": "http://loinc.org"
+          }
+        ],
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "drop-down",
+                  "display": "Drop down"
+                }
+              ],
+              "text": "Drop down"
+            }
+          }
+        ],
+        "linkId": "/44250-9",
+        "text": "Little interest or pleasure in doing things?",
+        "answerOption": [
+          {
+            "valueCoding": {
+              "code": "LA6568-5",
+              "display": "Not at all",
+              "system": "http://loinc.org"
+            },
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-optionPrefix",
+                "valueString": "0"
+              },
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 0
+              }
+            ]
+          },
+          {
+            "valueCoding": {
+              "code": "LA6569-3",
+              "display": "Several days",
+              "system": "http://loinc.org"
+            },
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-optionPrefix",
+                "valueString": "1"
+              },
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 1
+              }
+            ]
+          },
+          {
+            "valueCoding": {
+              "code": "LA6570-1",
+              "display": "More than half the days",
+              "system": "http://loinc.org"
+            },
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-optionPrefix",
+                "valueString": "2"
+              },
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 2
+              }
+            ]
+          },
+          {
+            "valueCoding": {
+              "code": "LA6571-9",
+              "display": "Nearly every day",
+              "system": "http://loinc.org"
+            },
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-optionPrefix",
+                "valueString": "3"
+              },
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 3
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "choice",
+        "code": [
+          {
+            "code": "44255-8",
+            "display": "Feeling down, depressed, or hopeless?",
+            "system": "http://loinc.org"
+          }
+        ],
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "drop-down",
+                  "display": "Drop down"
+                }
+              ],
+              "text": "Drop down"
+            }
+          }
+        ],
+        "linkId": "/44255-8",
+        "text": "Feeling down, depressed, or hopeless?",
+        "answerOption": [
+          {
+            "valueCoding": {
+              "code": "LA6568-5",
+              "display": "Not at all",
+              "system": "http://loinc.org"
+            },
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-optionPrefix",
+                "valueString": "0"
+              },
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 0
+              }
+            ]
+          },
+          {
+            "valueCoding": {
+              "code": "LA6569-3",
+              "display": "Several days",
+              "system": "http://loinc.org"
+            },
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-optionPrefix",
+                "valueString": "1"
+              },
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 1
+              }
+            ]
+          },
+          {
+            "valueCoding": {
+              "code": "LA6570-1",
+              "display": "More than half the days",
+              "system": "http://loinc.org"
+            },
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-optionPrefix",
+                "valueString": "2"
+              },
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 2
+              }
+            ]
+          },
+          {
+            "valueCoding": {
+              "code": "LA6571-9",
+              "display": "Nearly every day",
+              "system": "http://loinc.org"
+            },
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-optionPrefix",
+                "valueString": "3"
+              },
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/ordinalValue",
+                "valueDecimal": 3
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "choice",
+        "code": [
+          {
+            "code": "93038-8",
+            "display": "Stress means a situation in which a person feels tense, restless, nervous, or anxious, or is unable to sleep at night because his or her mind is troubled all the time.  Do you feel this kind of stress these days?",
+            "system": "http://loinc.org"
+          }
+        ],
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "drop-down",
+                  "display": "Drop down"
+                }
+              ],
+              "text": "Drop down"
+            }
+          }
+        ],
+        "linkId": "/93038-8",
+        "text": "Stress means a situation in which a person feels tense, restless, nervous, or anxious, or is unable to sleep at night because his or her mind is troubled all the time.  Do you feel this kind of stress these days?",
+        "answerOption": [
+          {
+            "valueCoding": {
+              "code": "LA6568-5",
+              "display": "Not at all",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA13863-8",
+              "display": "A little bit",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA13909-9",
+              "display": "Somewhat",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA13902-4",
+              "display": "Quite a bit",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA13914-9",
+              "display": "Very much",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA30122-8",
+              "display": "I choose not to answer this question",
+              "system": "http://loinc.org"
+            }
+          }
+        ]
+      },
+      {
+        "type": "choice",
+        "code": [
+          {
+            "code": "69858-9",
+            "display": "Because of a physical, mental, or emotional condition, do you have serious difficulty concentrating, remembering, or making decisions?",
+            "system": "http://loinc.org"
+          }
+        ],
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "drop-down",
+                  "display": "Drop down"
+                }
+              ],
+              "text": "Drop down"
+            }
+          }
+        ],
+        "linkId": "/69858-9",
+        "text": "Because of a physical, mental, or emotional condition, do you have serious difficulty concentrating, remembering, or making decisions?",
+        "answerOption": [
+          {
+            "valueCoding": {
+              "code": "LA33-6",
+              "display": "Yes",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA32-8",
+              "display": "No",
+              "system": "http://loinc.org"
+            }
+          }
+        ]
+      },
+      {
+        "type": "choice",
+        "code": [
+          {
+            "code": "69861-3",
+            "display": "Because of a physical, mental, or emotional condition, do you have difficulty doing errands alone such as visiting a physician's office or shopping?",
+            "system": "http://loinc.org"
+          }
+        ],
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/questionnaire-item-control",
+                  "code": "drop-down",
+                  "display": "Drop down"
+                }
+              ],
+              "text": "Drop down"
+            }
+          }
+        ],
+        "linkId": "/69861-3",
+        "text": "Because of a physical, mental, or emotional condition, do you have difficulty doing errands alone such as visiting a physician's office or shopping?",
+        "answerOption": [
+          {
+            "valueCoding": {
+              "code": "LA33-6",
+              "display": "Yes",
+              "system": "http://loinc.org"
+            }
+          },
+          {
+            "valueCoding": {
+              "code": "LA32-8",
+              "display": "No",
+              "system": "http://loinc.org"
+            }
+          }
+        ]
+      }
+    ]
+  }
