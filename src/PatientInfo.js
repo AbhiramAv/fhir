@@ -1,68 +1,94 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { oauth2 as SMART } from 'fhirclient';
 
 const PatientInfo = () => {
     const [code, setCode] = useState("");
     const [accessToken, setAccessToken] = useState("");
     const [patient, setPatient] = useState("");
     const [patientData, setPatientData] = useState({});
+    const [questionnaires, setQuestionnaires] = useState([]);
     const clientId = "9e43034e-949f-41f5-880e-eb31a7663bee"; // Replace with your client id
     const redirect = process.env.NODE_ENV === 'production'
-        ? "https://lucid-wozniak-940eae.netlify.app"
+        ? "https://lucid-wozniak-940eae.netlify.app/callback"
         : "http://localhost:3000/callback";
-
-    const authorizeLink = `https://fhir.epic.com/interconnect-fhir-oauth/oauth2/authorize?response_type=code&redirect_uri=${redirect}&client_id=${clientId}&state=1234&scope=patient.read, patient.search`;
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const codeParam = urlParams.get('code');
         if (codeParam) {
             setCode(codeParam);
-            const fetchToken = async () => {
-                const params = new URLSearchParams();
-                params.append('grant_type', 'authorization_code');
-                params.append('redirect_uri', redirect);
-                params.append('code', codeParam);
-                params.append('client_id', clientId);
-                params.append('state', '1234');
-                const config = {
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                };
-
-                try {
-                    const response = await axios.post(
-                        'https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token',
-                        params,
-                        config
-                    );
-                    setAccessToken(response.data.access_token);
-                    setPatient(response.data.patient);
-                } catch (error) {
-                    console.error('Authorization error:', error);
-                }
-            };
-            fetchToken();
+            fetchToken(codeParam);
         }
-    }, [redirect, clientId]);
+    }, []);
+
+    const fetchToken = async (codeParam) => {
+        const params = new URLSearchParams();
+        params.append('grant_type', 'authorization_code');
+        params.append('redirect_uri', redirect);
+        params.append('code', codeParam);
+        params.append('client_id', clientId);
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        };
+
+        try {
+            const response = await axios.post(
+                'https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token',
+                params,
+                config
+            );
+            console.log('Token response:', response.data);
+            setAccessToken(response.data.access_token);
+            setPatient(response.data.patient);
+        } catch (error) {
+            console.error('Authorization error:', error.response ? error.response.data : error);
+        }
+    };
 
     useEffect(() => {
         if (accessToken && patient) {
-            const fetchPatientData = async () => {
-                try {
-                    const response = await axios.get(
-                        `https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/${patient}`,
-                        { headers: { Authorization: `Bearer ${accessToken}` } }
-                    );
-                    setPatientData(response.data);
-                } catch (error) {
-                    console.error('Error fetching patient data:', error);
-                }
-            };
             fetchPatientData();
+            fetchQuestionnaires();
         }
     }, [accessToken, patient]);
+
+    const fetchPatientData = async () => {
+        try {
+            const response = await axios.get(
+                `https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/${patient}`,
+                { headers: { Authorization: `Bearer ${accessToken}` } }
+            );
+            console.log('Patient data response:', response.data);
+            setPatientData(response.data);
+        } catch (error) {
+            console.error('Error fetching patient data:', error.response ? error.response.data : error);
+        }
+    };
+
+    const fetchQuestionnaires = async () => {
+        try {
+            const response = await axios.get(
+                `https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/CarePlan/${patient}`,
+                { headers: { Authorization: `Bearer ${accessToken}` } }
+            );
+            setQuestionnaires(response.data.entry || []);
+        } catch (error) {
+            console.error('Error fetching questionnaires:', error.response ? error.response.data : error);
+        }
+    };
+
+    const handleSignIn = () => {
+        SMART.authorize({
+            clientId: clientId,
+            scope: "launch/patient openid fhirUser patient/*.read Questionnaire.read Questionnaire.search QuestionnaireResponse.read QuestionnaireResponse.create QuestionnaireResponse.search Patient.read Patient.search Patient.create",
+            redirectUri: redirect,
+            iss: "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/"
+        });
+    };
 
     return (
         <div className="container">
@@ -74,9 +100,8 @@ const PatientInfo = () => {
                     <a
                         className="btn btn-info"
                         style={{ textDecoration: 'none' }}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href={authorizeLink}
+                        href="javascript:void(0);"
+                        onClick={handleSignIn}
                     >
                         Sign in
                     </a>
@@ -131,6 +156,21 @@ const PatientInfo = () => {
                     <p className="ml-2" style={{ wordBreak: 'break-all' }}>{accessToken}</p>
                     <strong>Patient Resource:</strong>
                     <pre>{JSON.stringify(patientData, null, 2)}</pre>
+
+                    <hr />
+                    <h2>Questionnaires</h2>
+                    {questionnaires.length > 0 ? (
+                        <ul>
+                            {questionnaires.map((q, index) => (
+                                <li key={index}>
+                                    <strong>{q.resource.title}</strong><br />
+                                    <em>{q.resource.status}</em>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p>No questionnaires found.</p>
+                    )}
                 </div>
             )}
         </div>
