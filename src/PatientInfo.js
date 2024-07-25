@@ -74,7 +74,7 @@ const PatientInfo = () => {
     const fetchQuestionnaires = async () => {
         try {
             const response = await axios.get(
-                `https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/CarePlan/${patient}`,
+                `https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Questionnaire/${patient}`,
                 { headers: { Authorization: `Bearer ${accessToken}` } }
             );
             setQuestionnaires(response.data.entry || []);
@@ -110,6 +110,11 @@ const PatientInfo = () => {
             console.error('Error submitting form:', error.response ? error.response.data : error);
             alert('Failed to submit form.');
         }
+    };
+
+    const handleLogout = () => {
+        sessionStorage.clear();
+        window.location.href = redirect;
     };
 
     return (
@@ -196,6 +201,8 @@ const PatientInfo = () => {
 
                     <h2> Form </h2>
                     <QRForm formToAdd={formTemplate} onSubmit={submitForm} />
+
+                    <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
                 </div>
             )}
         </div>
