@@ -93,6 +93,7 @@ const PatientInfo = () => {
     };
 
     const submitForm = async (filledForm) => {
+        console.log('Filled Form data:', JSON.stringify(filledForm, null,2));
         try {
             const response = await axios.post(
                 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/QuestionnaireResponse',
@@ -107,7 +108,15 @@ const PatientInfo = () => {
             console.log('Submission response:', response.data);
             alert('Form submitted successfully!');
         } catch (error) {
-            console.error('Error submitting form:', error.response ? error.response.data : error);
+            if(error.response){
+                console.error('Error response data: ', error.response.data);
+                console.error('Error response status: ', error.response.status);
+                console.error('Error response headers: ', error.response.headers);
+            } else if (error.request){
+                console.error('Error request: ', error.request);
+            } else {
+                console.error('Error Message: ', error.message);
+            }
             alert('Failed to submit form.');
         }
     };
