@@ -1,7 +1,32 @@
 .container {
-  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+}
+
+.login-box {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.main-content {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px; /* Add margin to separate from access code box */
+}
+
+.box {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  width: 48%; /* Splits the space evenly between the two boxes */
+  margin: 10px; /* Adds spacing between the two boxes */
 }
 
 .btn {
@@ -24,4 +49,19 @@
 
 .btn:hover {
   background-color: #0056b3;
+}
+
+.btn-danger {
+  background-color: #dc3545; /* Bootstrap's danger color for contrast */
+}
+
+.access-code-box {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-align: center;
+  font-size: 12px; /* Small letters */
+  word-break: break-all; /* Ensures long words break onto the next line */
+  overflow-wrap: break-word; /* Additional support for word breaking */
 }

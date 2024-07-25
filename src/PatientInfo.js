@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { oauth2 as SMART } from 'fhirclient';
-import formTemplate from './formTemplate.json'
+import React, { useEffect, useState } from 'react';
 import QRForm from './QRForm';
+import formTemplate from './formTemplate.json';
 
 const PatientInfo = () => {
     const [code, setCode] = useState("");
@@ -10,6 +10,7 @@ const PatientInfo = () => {
     const [patient, setPatient] = useState("");
     const [patientData, setPatientData] = useState({});
     const [questionnaires, setQuestionnaires] = useState([]);
+    const [showResource, setShowResource] = useState(false);
     const clientId = "9e43034e-949f-41f5-880e-eb31a7663bee"; // Replace with your client id
     const redirect = process.env.NODE_ENV === 'production'
         ? "https://lucid-wozniak-940eae.netlify.app/callback"
@@ -121,73 +122,106 @@ const PatientInfo = () => {
         }
     };
 
+<<<<<<< HEAD
+=======
+    const handleLogout = () => {
+        sessionStorage.clear();
+        window.location.href = redirect;
+    };
+
+    const toggleResource = () => {
+        setShowResource(!showResource);
+    };
+
+>>>>>>> 7633fda (Merge branch 'main' of https://github.com/AbhiramAv/fhir-react)
     return (
         <div className="container">
-            <div style={{ textAlign: 'center' }}>
+            <div className="login-box">
                 <h1>Smart on FHIR - Patient Info</h1>
                 <p><strong>Username:</strong> fhircamila</p>
                 <p><strong>Password:</strong> epicepic1</p>
                 {!code && (
-                    <a
-                        className="btn btn-info"
-                        style={{ textDecoration: 'none' }}
-                        href="javascript:void(0);"
-                        onClick={handleSignIn}
-                    >
+                    <a className="btn btn-info" href="javascript:void(0);" onClick={handleSignIn}>
                         Sign in
                     </a>
                 )}
-                <hr />
             </div>
+
             {accessToken && (
-                <div>
-                    <p><strong>Patient Id:</strong> {patient}</p>
+                <>
+                    <div className="main-content">
+                        {/* Patient Information Section */}
+                        <div className="box patient-info">
+                            <p><strong>Patient Id:</strong> {patient}</p>
+                            {patientData.name && <><strong>Name: </strong>{patientData.name[0].text}<br /></>}
+                            {patientData.birthDate && <><strong>Birth Date: </strong>{patientData.birthDate}<br /></>}
+                            {patientData.gender && <><strong>Gender: </strong>{patientData.gender}<br /></>}
+                            {patientData.deceasedBoolean !== undefined && <><strong>Vital Status: </strong>{patientData.deceasedBoolean ? "Dead" : "Alive"}<br /></>}
+                            {patientData.maritalStatus && <><strong>Marital Status: </strong>{patientData.maritalStatus.text}<br /></>}
+                            {patientData.telecom && (
+                                <>
+                                    <strong>Telecom: </strong>
+                                    {patientData.telecom.map((telecom, index) => (
+                                        <div key={index}>
+                                            <strong>{telecom.system}</strong> - {telecom.use} {telecom.value}
+                                        </div>
+                                    ))}
+                                </>
+                            )}
+                            {patientData.address && (
+                                <>
+                                    <strong>Address: </strong>
+                                    {patientData.address.map((address, index) => (
+                                        <div key={index}>
+                                            <strong>{address.use} -</strong> {address.line.join(', ')}, {address.city}, {address.state}, {address.postalCode}, {address.country}
+                                            {address.period && address.period.start && <> <strong>From</strong> {address.period.start}</>}
+                                        </div>
+                                    ))}
+                                </>
+                            )}
+                            {patientData.communication && patientData.communication[0].language && (
+                                <><strong>Language: </strong>{patientData.communication[0].language.coding[0].display}<br /></>
+                            )}
+                            {patientData.generalPractitioner && (
+                                <><strong>General Practitioner: </strong>{patientData.generalPractitioner[0].display}<br /></>
+                            )}
+                            {patientData.managingOrganization && (
+                                <><strong>Managing Organization: </strong>{patientData.managingOrganization.display}<br /></>
+                            )}
+                            <hr />
+                            <button className="btn btn-secondary" onClick={toggleResource}>
+                                {showResource ? 'Hide Resource' : 'Show Resource'}
+                            </button>
+                            {showResource && (
+                                <>
+                                    <strong>Patient Resource:</strong>
+                                    <pre>{JSON.stringify(patientData, null, 2)}</pre>
+                                </>
+                            )}
+                        </div>
 
-                    {patientData.name && <><strong>Name: </strong>{patientData.name[0].text}<br /></>}
-                    {patientData.birthDate && <><strong>Birth Date: </strong>{patientData.birthDate}<br /></>}
-                    {patientData.gender && <><strong>Gender: </strong>{patientData.gender}<br /></>}
-                    {patientData.deceasedBoolean !== undefined && <><strong>Vital Status: </strong>{patientData.deceasedBoolean ? "Dead" : "Alive"}<br /></>}
-                    {patientData.maritalStatus && <><strong>Marital Status: </strong>{patientData.maritalStatus.text}<br /></>}
-                    {patientData.telecom && (
-                        <>
-                            <strong>Telecom: </strong>
-                            <div>
-                                {patientData.telecom.map((telecom, index) => (
-                                    <div key={index} className="ml-2">
-                                        <strong>{telecom.system}</strong> - {telecom.use} {telecom.value}
-                                    </div>
-                                ))}
-                            </div>
-                        </>
-                    )}
-                    {patientData.address && (
-                        <>
-                            <strong>Address: </strong>
-                            <div>
-                                {patientData.address.map((address, index) => (
-                                    <div key={index} className="ml-2">
-                                        <strong>{address.use} -</strong> {address.line.toString()}, {address.city}, {address.district}, {address.state}, {address.postalCode}, {address.country}
-                                        {address.period && address.period.start && <> <strong>From</strong> {address.period.start}</>}
-                                    </div>
-                                ))}
-                            </div>
-                        </>
-                    )}
-                    {patientData.communication && patientData.communication[0].language && (
-                        <><strong>Language: </strong>{patientData.communication[0].language.coding[0].display}<br /></>
-                    )}
-                    {patientData.generalPractitioner && (
-                        <><strong>General Practitioner: </strong>{patientData.generalPractitioner[0].display}<br /></>
-                    )}
-                    {patientData.managingOrganization && (
-                        <><strong>Managing Organization: </strong>{patientData.managingOrganization.display}<br /></>
-                    )}
-                    <hr />
-                    <strong>Access code:</strong>
-                    <p className="ml-2" style={{ wordBreak: 'break-all' }}>{accessToken}</p>
-                    <strong>Patient Resource:</strong>
-                    <pre>{JSON.stringify(patientData, null, 2)}</pre>
+                        {/* Questionnaire Section */}
+                        <div className="box questionnaire-section">
+                            <h2>Questionnaires</h2>
+                            {questionnaires.length > 0 ? (
+                                <ul>
+                                    {questionnaires.map((q, index) => (
+                                        <li key={index}>
+                                            <strong>{q.resource.title}</strong><br />
+                                            <em>{q.resource.status}</em>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p>No questionnaires found.</p>
+                            )}
+                            <h2>Form</h2>
+                            <QRForm formToAdd={formTemplate} onSubmit={submitForm} />
+                            <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
+                        </div>
+                    </div>
 
+<<<<<<< HEAD
                     <hr />
                     <h2>Questionnaires</h2>
                     {questionnaires.length > 0 ? (
@@ -206,6 +240,13 @@ const PatientInfo = () => {
                     <h2> Form </h2>
                     <QRForm formToAdd={formTemplate} onSubmit={submitForm} />
                 </div>
+=======
+                    {/* Access Code Box */}
+                    <div className="access-code-box">
+                        <p><strong>Access Code:</strong> {accessToken}</p>
+                    </div>
+                </>
+>>>>>>> 7633fda (Merge branch 'main' of https://github.com/AbhiramAv/fhir-react)
             )}
         </div>
     );
