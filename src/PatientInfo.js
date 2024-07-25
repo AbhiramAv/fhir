@@ -72,7 +72,7 @@ const PatientInfo = () => {
     const fetchQuestionnaires = async () => {
         try {
             const response = await axios.get(
-                `https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/CarePlan/${patient}`,
+                `https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Questionnaire/${patient}`,
                 { headers: { Authorization: `Bearer ${accessToken}` } }
             );
             setQuestionnaires(response.data.entry || []);
@@ -88,6 +88,11 @@ const PatientInfo = () => {
             redirectUri: redirect,
             iss: "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/"
         });
+    };
+
+    const handleLogout = () => {
+        sessionStorage.clear();
+        window.location.href = redirect;
     };
 
     return (
@@ -171,6 +176,8 @@ const PatientInfo = () => {
                     ) : (
                         <p>No questionnaires found.</p>
                     )}
+
+                    <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
                 </div>
             )}
         </div>
