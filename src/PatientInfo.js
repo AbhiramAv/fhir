@@ -75,7 +75,7 @@ const PatientInfo = () => {
     const fetchQuestionnaires = async () => {
         try {
             const response = await axios.get(
-                `https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/CarePlan/${patient}`,
+                `https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Questionnaire/${patient}`,
                 { headers: { Authorization: `Bearer ${accessToken}` } }
             );
             setQuestionnaires(response.data.entry || []);
@@ -94,7 +94,6 @@ const PatientInfo = () => {
     };
 
     const submitForm = async (filledForm) => {
-        console.log('Filled Form data:', JSON.stringify(filledForm, null,2));
         try {
             const response = await axios.post(
                 'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/QuestionnaireResponse',
@@ -109,21 +108,11 @@ const PatientInfo = () => {
             console.log('Submission response:', response.data);
             alert('Form submitted successfully!');
         } catch (error) {
-            if(error.response){
-                console.error('Error response data: ', error.response.data);
-                console.error('Error response status: ', error.response.status);
-                console.error('Error response headers: ', error.response.headers);
-            } else if (error.request){
-                console.error('Error request: ', error.request);
-            } else {
-                console.error('Error Message: ', error.message);
-            }
+            console.error('Error submitting form:', error.response ? error.response.data : error);
             alert('Failed to submit form.');
         }
     };
 
-<<<<<<< HEAD
-=======
     const handleLogout = () => {
         sessionStorage.clear();
         window.location.href = redirect;
@@ -133,7 +122,6 @@ const PatientInfo = () => {
         setShowResource(!showResource);
     };
 
->>>>>>> 7633fda (Merge branch 'main' of https://github.com/AbhiramAv/fhir-react)
     return (
         <div className="container">
             <div className="login-box">
@@ -221,32 +209,11 @@ const PatientInfo = () => {
                         </div>
                     </div>
 
-<<<<<<< HEAD
-                    <hr />
-                    <h2>Questionnaires</h2>
-                    {questionnaires.length > 0 ? (
-                        <ul>
-                            {questionnaires.map((q, index) => (
-                                <li key={index}>
-                                    <strong>{q.resource.title}</strong><br />
-                                    <em>{q.resource.status}</em>
-                                </li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p>No questionnaires found.</p>
-                    )}
-
-                    <h2> Form </h2>
-                    <QRForm formToAdd={formTemplate} onSubmit={submitForm} />
-                </div>
-=======
                     {/* Access Code Box */}
                     <div className="access-code-box">
                         <p><strong>Access Code:</strong> {accessToken}</p>
                     </div>
                 </>
->>>>>>> 7633fda (Merge branch 'main' of https://github.com/AbhiramAv/fhir-react)
             )}
         </div>
     );
