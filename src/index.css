@@ -1,67 +1,155 @@
+/* Base setup for the container and full viewport management */
 .container {
+  position: relative;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
 }
 
-.login-box {
-  background-color: #f0f0f0;
+/* Header styling */
+.header {
+  background-color: #1e2a36;
+  color: white;
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Center the title horizontally */
+  align-items: center;
+  padding: 10px 20px;
+  position: relative; /* Needed for absolute positioning of the logout button */
+}
+
+.header h1 {
+  font-size: 45px;
+  margin: 0;
+  color:#ffffff;
+}
+
+.logout-button {
+  position: absolute; /* Absolute positioning to the right */
+  right: 20px; /* Adjust the right position as needed */
+  padding: 8px 16px;
+  font-size: 12px;
+  background-color: #ff79c6;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+  background-color: #ff61a6;
+}
+
+/* Dashboard layout */
+.dashboard {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 60px);
+}
+
+.sidebar {
+  background-color: #2c3e50;
+  padding: 10px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+}
+
+.sidebar-icon {
+  margin: 20px 0;
+  cursor: pointer;
+}
+
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 250px; /* Adjust for the sidebar width */
+}
+
+.patient-info {
+  background-color: #ecf0f1;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   margin-bottom: 20px;
-}
-
-.main-content {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px; /* Add margin to separate from access code box */
+  flex-direction: column;
+  align-items: start;
 }
 
-.box {
-  background-color: #fff;
-  padding: 20px;
+.patient-image {
+  width: 100px; /* Adjust the size as needed */
+  height: 100px; /* Adjust the size as needed */
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  width: 48%; /* Splits the space evenly between the two boxes */
-  margin: 10px; /* Adds spacing between the two boxes */
+  margin-bottom: 20px;
+  border-radius: 80px;
+  display: center;
 }
 
-.btn {
-  display: inline-block;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-  text-decoration: none;
-  background-color: #007bff;
+.show-details-button {
+  margin-top: 20px;
+  padding: 8px 16px;
+  font-size: 12px;
+  background-color: #ff79c6;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 15px;
   cursor: pointer;
+  transition: background-color 0.3s;
+  align-self: flex-start; /* Align button to the start */
 }
 
-.btn-info {
-  background-color: #17a2b8;
+.show-details-button:hover {
+  background-color: #ff61a6;
 }
 
-.btn:hover {
-  background-color: #0056b3;
-}
-
-.btn-danger {
-  background-color: #dc3545; /* Bootstrap's danger color for contrast */
-}
-
-.access-code-box {
-  background-color: #f0f0f0;
+.resource-access-box {
+  background-color: #fff;
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  text-align: center;
-  font-size: 12px; /* Small letters */
-  word-break: break-all; /* Ensures long words break onto the next line */
-  overflow-wrap: break-word; /* Additional support for word breaking */
+  overflow: auto;
+  max-height: 300px;
+  font-size: 12px;
+  color: black;
+}
+
+.login-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.btn-info {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #17a2b8;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-info:hover {
+  background-color: #138496;
 }
