@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import QRForm from './QRForm';
 import formTemplate from './formTemplate.json';
 import patientIcon from './humanIcon.png'; // Correctly import the image
+import './index.css'; // Adjust the path as necessary
 
 const PatientInfo = () => {
     const [code, setCode] = useState("");
@@ -127,6 +128,10 @@ const PatientInfo = () => {
         setShowResource(!showResource);
     };
 
+    const displayPatientDataJSON = () => {
+        return JSON.stringify(patientData, null, 2) || '{}';
+    };
+
     return (
         <div className="container">
             <div className="header">
@@ -164,8 +169,11 @@ const PatientInfo = () => {
                         )}
                     </div>
                     <button className="show-details-button" onClick={toggleResource}>
-                        {showResource ? 'Hide Patient Data JSON' : 'Patient Data JSON'}
+                        {showResource ? 'Hide Patient Data JSON' : 'Show Patient Data JSON'}
                     </button>
+                    {showResource && (
+                        <pre className="resource-access-box">{displayPatientDataJSON()}</pre>
+                    )}
                 </div>
                 <div className="main-content">
                     {!code && (
