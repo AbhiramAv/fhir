@@ -1,10 +1,17 @@
 /* Base setup for the container and full viewport management */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: auto; /* Allow scrolling */
+}
+
 .container {
   position: relative;
-  height: 100vh;
+  min-height: 100vh; /* Allow content to grow beyond 100vh */
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start; /* Align items to the start */
   justify-content: flex-start;
   padding: 0;
 }
@@ -13,18 +20,21 @@
 .header {
   background-color: #1e2a36;
   color: white;
-  width: 100%;
+  width: 100%; /* Full width */
   display: flex;
   justify-content: center; /* Center the title horizontally */
   align-items: center;
   padding: 10px 20px;
-  position: relative; /* Needed for absolute positioning of the logout button */
+  position: fixed; /* Fixed positioning */
+  left: 0; /* Align to the left */
+  top: 0;
+  z-index: 1; /* Ensure header is above other content */
 }
 
 .header h1 {
   font-size: 45px;
   margin: 0;
-  color:#ffffff;
+  color: #ffffff;
 }
 
 .logout-button {
@@ -32,40 +42,65 @@
   right: 20px; /* Adjust the right position as needed */
   padding: 8px 16px;
   font-size: 12px;
-  background-color: #ff79c6;
-  color: white;
+  background-color: #00fff7;
+  color: rgb(0, 0, 0);
   border: none;
   border-radius: 15px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: background-color 0.3s;
+  margin-right: 30px;
 }
 
 .logout-button:hover {
-  background-color: #ff61a6;
+  background-color: #00fff7;
 }
 
 /* Dashboard layout */
 .dashboard {
   display: flex;
   width: 100%;
-  height: calc(100vh - 60px);
+  margin-top: 60px; /* Adjust for the fixed header height */
+  overflow: auto; /* Enable scrolling */
+  position: relative; /* Ensure child elements can be absolutely positioned */
 }
 
 .sidebar {
-  background-color: #2c3e50;
+  background-color: #003c77;
   padding: 10px;
   width: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: absolute;
+  position: fixed; /* Fixed positioning */
   left: 0;
-  top: 0;
+  top: 60px; /* Adjust for header height */
   bottom: 0;
-  margin: 0;
-  padding: 0;
-  overflow-y: auto;
+  overflow-y: auto; /* Enable scrolling */
+}
+
+.content-area {
+  margin-left: 260px; /* Adjust for sidebar width */
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  overflow-y: auto; /* Enable scrolling */
+}
+
+/* Button container styling */
+.button-container {
+  background-color: #ffffff;
+  padding: 20px 10px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 25px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Increased shadow */
+  margin-bottom: 20px; /* Space below the button container */
+  margin-top: 30px;
 }
 
 .sidebar-icon {
@@ -73,22 +108,45 @@
   cursor: pointer;
 }
 
+.btn-saved-response,
+.btn-ahc-questionnaire,
+.show-details-button {
+  padding: 8px 16px;
+  font-size: 12px;
+  background-color: #00fff7;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  margin-bottom: 10px; /* Space between buttons */
+  transition: background-color 0.3s;
+}
 
+.btn-saved-response:hover,
+.btn-ahc-questionnaire:hover,
+.show-details-button:hover {
+  background-color: #00fff7;
+}
+
+/* Main content area */
 .main-content {
   flex-grow: 1;
-  padding: 20px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: 250px; /* Adjust for the sidebar width */
+  overflow: auto; /* Ensure scrolling */
 }
 
 .patient-info {
-  background-color: #ecf0f1;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 25px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
+  margin-top: 40px;
+  margin-left: 5%;
+  margin-right: 5%;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -97,45 +155,19 @@
 .patient-image {
   width: 100px; /* Adjust the size as needed */
   height: 100px; /* Adjust the size as needed */
-  border-radius: 8px;
-  margin-bottom: 20px;
   border-radius: 80px;
-  display: center;
-}
-
-.show-details-button {
-  margin-top: 20px;
-  padding: 8px 16px;
-  font-size: 12px;
-  background-color: #ff79c6;
-  color: white;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  align-self: flex-start; /* Align button to the start */
-}
-
-.show-details-button:hover {
-  background-color: #ff61a6;
+  margin-bottom: 20px;
 }
 
 .resource-access-box {
   background-color: #fff;
   padding: 10px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow: auto;
   max-height: 300px;
   font-size: 12px;
   color: black;
-}
-
-.login-box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
 }
 
 .btn-info {
@@ -152,4 +184,24 @@
 
 .btn-info:hover {
   background-color: #138496;
+}
+
+.form-container {
+  margin-top: 30px;
+  position: fixed; /* Fixed positioning */
+  right: 0; /* Align to the right */
+  top: 60px; /* Adjust for the header height */
+  width: 50%; /* Adjust as needed */
+  height: calc(100vh - 60px); /* Full height minus the header height */
+  background-color: #ffffff; /* Background color for the form container */
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* Add some shadow for better visibility */
+  border-radius: 8px 0 0 8px; /* Rounded corners on the left side */
+  overflow-y: auto; /* Enable scrolling within the form container */
+  padding: 20px; /* Add some padding for better spacing */
+  display: none; /* Initially hidden */
+}
+
+/* Show form container when active */
+.form-container.active {
+  display: block;
 }

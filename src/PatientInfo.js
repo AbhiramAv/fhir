@@ -14,6 +14,7 @@ const PatientInfo = () => {
     const [patientData, setPatientData] = useState({});
     const [questionnaires, setQuestionnaires] = useState([]);
     const [showResource, setShowResource] = useState(false);
+    const [showForm, setShowForm] = useState(false); // New state to toggle form display
     const clientId = "9e43034e-949f-41f5-880e-eb31a7663bee"; // Replace with your client id
     const redirect = process.env.NODE_ENV === 'production'
         ? "https://lucid-wozniak-940eae.netlify.app/callback"
@@ -128,6 +129,10 @@ const PatientInfo = () => {
         setShowResource(!showResource);
     };
 
+    const toggleForm = () => {
+        setShowForm(!showForm);
+    };
+
     const displayPatientDataJSON = () => {
         return JSON.stringify(patientData, null, 2) || '{}';
     };
@@ -140,7 +145,6 @@ const PatientInfo = () => {
             </div>
             <div className="dashboard">
                 <div className="sidebar">
-
                     <div className="patient-info">
                         <img src={patientIcon} alt="Patient" className="patient-image" />
                         <p><strong>Patient Id:</strong> {patient}</p>
@@ -175,33 +179,20 @@ const PatientInfo = () => {
                         <pre className="resource-access-box">{displayPatientDataJSON()}</pre>
                     )}
                 </div>
-                <div className="main-content">
-                    {!code && (
-                        <div className="login-box">
-                            <button className="btn btn-info" onClick={handleSignIn}>
-                                Sign in
-                            </button>
-                        </div>
-                    )}
-                    {accessToken && (
-                        <div className="box questionnaire-section">
-                            <h2>Questionnaires</h2>
-                            {questionnaires.length > 0 ? (
-                                <ul>
-                                    {questionnaires.map((q, index) => (
-                                        <li key={index}>
-                                            <strong>{q.resource.title}</strong><br />
-                                            <em>{q.resource.status}</em>
-                                        </li>
-                                    ))}
-                                </ul>
-                            ) : (
-                                <p>No questionnaires found.</p>
-                            )}
-                            <h2>Form</h2>
-                            <QRForm formToAdd={formTemplate} onSubmit={submitForm} />
-                        </div>
-                    )}
+                <div className="content-area">
+                    <div className="button-container">
+                        <button className="btn-saved-response">Saved Questionnaire Response</button>
+                        <button className="btn-ahc-questionnaire" onClick={toggleForm}>
+                            AHC Questionnaire
+                        </button>
+                    </div>
+                    <div className="main-content">
+                        {showForm && (
+                            <div className={`form-container ${showForm ? 'active' : ''}`}>
+                                <QRForm formToAdd={formTemplate} onSubmit={submitForm} />
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
