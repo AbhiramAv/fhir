@@ -15,7 +15,7 @@ const PatientInfo = () => {
     const [questionnaires, setQuestionnaires] = useState([]);
     const [showResource, setShowResource] = useState(false);
     const [showForm, setShowForm] = useState(false); // New state to toggle form display
-    const clientId = "9e43034e-949f-41f5-880e-eb31a7663bee"; // Replace with your client id
+    const clientId = "3d606cf8-37ed-4f3f-93a8-97a42a1e05d2"; // Replace with your client id
     const redirect = process.env.NODE_ENV === 'production'
         ? "https://lucid-wozniak-940eae.netlify.app/callback"
         : "http://localhost:3000/callback";
