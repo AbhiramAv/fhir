@@ -1,10 +1,10 @@
 import { oauth2 as SMART } from 'fhirclient';
 import React from 'react';
 import './SignIn.css'; // Adjust the path as necessary
-import signInLogo from './EPIC HYPERSPACE.png'; // Adjust path as necessary
+import signInLogo from '/Users/sooryarajendran/fhir-react/src/img/EPIC HYPERSPACE.png'; // Adjust path as necessary
 
 const SignIn = () => {
-    const clientId = "3d606cf8-37ed-4f3f-93a8-97a42a1e05d2"; // Replace with your client id
+    const clientId = "3c63cec8-5810-4595-86d3-51960f7aa898"; // Replace with your client id
     const redirect = process.env.NODE_ENV === 'production'
         ? "https://lucid-wozniak-940eae.netlify.app/callback"
         : "http://localhost:3000/callback";

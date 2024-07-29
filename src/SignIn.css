@@ -14,7 +14,7 @@ html, body {
     width: 100vw; /* Ensure the container covers the full viewport width */
     justify-content: center;
     align-items: center;
-    background: url('./HyperspaceBG2.png') no-repeat center center fixed; /* Path to your image */
+    background: url('/Users/sooryarajendran/fhir-react/src/img/HyperspaceBG3.png') no-repeat center center fixed; /* Path to your image */
     background-size: cover; /* Ensure the image covers the entire page */
 }
 

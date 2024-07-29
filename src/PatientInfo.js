@@ -1,11 +1,10 @@
 import axios from 'axios';
-import { oauth2 as SMART } from 'fhirclient';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import QRForm from './QRForm';
 import formTemplate from './formTemplate.json';
-import patientIcon from './humanIcon.png'; // Correctly import the image
 import './index.css'; // Adjust the path as necessary
+import patientIcon from '/Users/sooryarajendran/fhir-react/src/img/humanIcon.png'; // Correctly import the image
 
 const PatientInfo = () => {
     const [code, setCode] = useState("");
@@ -15,7 +14,7 @@ const PatientInfo = () => {
     const [questionnaires, setQuestionnaires] = useState([]);
     const [showResource, setShowResource] = useState(false);
     const [showForm, setShowForm] = useState(false); // New state to toggle form display
-    const clientId = "3d606cf8-37ed-4f3f-93a8-97a42a1e05d2"; // Replace with your client id
+    const clientId = "3c63cec8-5810-4595-86d3-51960f7aa898"; // Replace with your client id
     const redirect = process.env.NODE_ENV === 'production'
         ? "https://lucid-wozniak-940eae.netlify.app/callback"
         : "http://localhost:3000/callback";
@@ -67,17 +66,37 @@ const PatientInfo = () => {
     }, [accessToken, patient]);
 
     const fetchPatientData = async () => {
+        // Check if both accessToken and patient are available before making the call
+        if (!accessToken || !patient) {
+            console.error('Missing access token or patient ID');
+            return;
+        }
+        
+        const url = `https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/${patient}`;
+        const options = {
+            headers: { Authorization: `Bearer ${accessToken}` }
+        };
+    
         try {
-            const response = await axios.get(
-                `https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/${patient}`,
-                { headers: { Authorization: `Bearer ${accessToken}` } }
-            );
+            const response = await axios.get(url, options);
             console.log('Patient data response:', response.data);
             setPatientData(response.data);
         } catch (error) {
-            console.error('Error fetching patient data:', error.response ? error.response.data : error);
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.error('Error fetching patient data:', error.response.data);
+            } else if (error.request) {
+                // The request was made but no response was received
+                console.error('Error fetching patient data: No response received', error.request);
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.error('Error setting up the request to fetch patient data', error.message);
+            }
         }
     };
+    
+
 
     const fetchQuestionnaires = async () => {
         try {
@@ -91,14 +110,7 @@ const PatientInfo = () => {
         }
     };
 
-    const handleSignIn = () => {
-        SMART.authorize({
-            clientId: clientId,
-            scope: "launch/patient openid fhirUser patient/*.read Questionnaire.read Questionnaire.search QuestionnaireResponse.read QuestionnaireResponse.create QuestionnaireResponse.search Patient.read Patient.search Patient.create",
-            redirectUri: redirect,
-            iss: "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/"
-        });
-    };
+
 
     const submitForm = async (filledForm) => {
         try {
