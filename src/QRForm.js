@@ -27,7 +27,7 @@ const QRForm = ({ formToAdd, onSubmit }) => {
         await loadScript(zoneJs);
         await loadScript(lhcFormsJs);
         await loadScript(lhcFormsFHIRJs);
-        
+
         if (typeof window.LForms !== 'undefined') {
           window.LForms.Util.addFormToPage(formToAdd, 'formContainer');
         } else {
@@ -48,15 +48,35 @@ const QRForm = ({ formToAdd, onSubmit }) => {
 
   const showQR = () => {
     try {
-        const qr = window.LForms.Util.getFormFHIRData('QuestionnaireResponse', 'R4');
-        const formData = JSON.stringify(qr, null, 2);
-        console.log(formData);
-        onSubmit(qr);  // Call the onSubmit function passed as a prop
+      const qr = window.LForms.Util.getFormFHIRData('QuestionnaireResponse', 'R4');
+      const formData = JSON.stringify(qr, null, 2);
+
+      // Create a new popup window
+      const popup = window.open('', 'formDataPopup', 'width=600,height=400');
+
+      // Check if the popup was successfully created
+      if (popup) {
+        popup.document.open();
+        popup.document.write(`
+          <!DOCTYPE html>
+          <html>
+            <body>
+              <pre>${formData}</pre>
+            </body>
+          </html>
+        `);
+        popup.document.close();
+      } else {
+        alert('Popup blocked. Please allow popups for this site.');
+      }
+
+      onSubmit(qr);  // Call the onSubmit function passed as a prop
     } catch (error) {
-        console.error('Error showing QuestionnaireResponse:', error);
-        alert('Error showing QuestionnaireResponse');
+      console.error('Error showing QuestionnaireResponse:', error);
+      alert('Error showing QuestionnaireResponse');
     }
-};
+  };
+
 
   return (
     <div>
@@ -64,7 +84,7 @@ const QRForm = ({ formToAdd, onSubmit }) => {
       <button onClick={showQR}>
         Show FHIR QuestionnaireResponse
       </button>
-      <div id = "formContainer"></div>
+      <div id="formContainer"></div>
     </div>
   );
 };
