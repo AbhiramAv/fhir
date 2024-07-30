@@ -71,8 +71,8 @@ h2 {
 .btn {
   font-family: sans-serif;
   display: inline-block;
-  padding: 15px 20px;
-  font-size: 16px;
+  padding: 10px 15px;
+  font-size: 13px;
   font-weight: bold;
   text-align: center;
   text-decoration: none;
@@ -85,6 +85,10 @@ h2 {
 
 .btn-info {
   background-color: #e6355f;
+}
+
+.btn-submit {
+  background-color: #0088ff;
 }
 
 .btn:hover {

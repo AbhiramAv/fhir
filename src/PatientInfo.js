@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { oauth2 as SMART } from 'fhirclient';
 import React, { useEffect, useState } from 'react';
+import QRForm from './QRForm';
+import formTemplate from './formTemplate.json';
 
 const PatientInfo = () => {
     const [code, setCode] = useState("");
@@ -58,7 +60,6 @@ const PatientInfo = () => {
         if (accessToken && patient) {
             fetchPatientData();
             fetchQuestionnaires();
-            fetchQuestionnaireResponses();
         }
     }, [accessToken, patient]);
 
@@ -78,7 +79,7 @@ const PatientInfo = () => {
     const fetchQuestionnaires = async () => {
         try {
             const response = await axios.get(
-                `https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Questionnaire`,
+                `https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Questionnaire/eU7pqmsZY1Mzn5Q6N3sr5CypVI-gW8oj3qZkRi4fCIS83`,
                 { headers: { Authorization: `Bearer ${accessToken}` } }
             );
             setQuestionnaires(response.data.entry || []);
@@ -87,15 +88,39 @@ const PatientInfo = () => {
         }
     };
 
-    const fetchQuestionnaireResponses = async () => {
+    // const fetchQuestionnaireResponses = async () => {
+    //     try {
+    //         const response = await axios.get(
+    //             `https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/QuestionnaireResponse`,
+    //             { headers: { Authorization: `Bearer ${accessToken}` } }
+    //         );
+    //         setQuestionnaireResponses(response.data.entry || []);
+    //     } catch (error) {
+    //         console.error('Error fetching questionnaire responses:', error.response ? error.response.data : error);
+    //     }
+    // };
+
+    const submitForm = async (filledForm) => {
         try {
-            const response = await axios.get(
-                `https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/QuestionnaireResponse`,
-                { headers: { Authorization: `Bearer ${accessToken}` } }
+
+            const pretty = JSON.stringify(filledForm, null, 2);
+            document.querySelector("#insertResponse").textContent = pretty;
+
+            const response = await axios.post(
+                'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/QuestionnaireResponse',
+                filledForm,  // Assuming filledForm is correctly structured for FHIR
+                {
+                    headers: {
+                        'Content-Type': 'application/fhir+json',
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                }
             );
-            setQuestionnaireResponses(response.data.entry || []);
+            console.log('Submission response:', response.data);
+            alert('Form submitted successfully!');
         } catch (error) {
-            console.error('Error fetching questionnaire responses:', error.response ? error.response.data : error);
+            console.error('Error submitting form:', error.response ? error.response.data : error);
+            alert('Failed to submit form.');
         }
     };
 
@@ -153,48 +178,24 @@ const PatientInfo = () => {
                         <div className="left-content">
                             <div className="box">
                                 <h2 onClick={toggleQuestionnaires}>Questionnaires <span className="arrow">{showQuestionnaires ? 'v' : '>'}</span></h2>
-                                {showQuestionnaires && (
-                                    <ul>
-                                        {questionnaires.length > 0 ? (
-                                            questionnaires.map((q, index) => (
-                                                <li key={index} onClick={() => handleItemClick(q)}>
-                                                    <strong>{q.resource.title}</strong><br />
-                                                    <em>{q.resource.status}</em>
-                                                </li>
-                                            ))
-                                        ) : (
-                                            <p>No questionnaires found.</p>
-                                        )}
-                                    </ul>
-                                )}
+                                {showQuestionnaires && (<QRForm formToAdd={formTemplate} onSubmit={submitForm} />)}
                             </div>
 
-                            <div className="box">
+                            {/* <div className="box">
                                 <h2 onClick={toggleResponses}>Questionnaire Responses <span className="arrow">{showResponses ? 'v' : '>'}</span></h2>
-                                {showResponses && (
-                                    <ul>
-                                        {questionnaireResponses.length > 0 ? (
-                                            questionnaireResponses.map((q, index) => (
-                                                <li key={index} onClick={() => handleItemClick(q)}>
-                                                    <strong>{q.resource.title}</strong><br />
-                                                    <em>{q.resource.status}</em>
-                                                </li>
-                                            ))
-                                        ) : (
-                                            <p>No questionnaire responses found.</p>
-                                        )}
-                                    </ul>
-                                )}
-                            </div>
+                                {showResponses && (<pre id = "insertResponse"></pre>)}
+                            </div> */}
                         </div>
 
                         <div className="right-box">
-                            {selectedContent && (
+                            {/* {selectedContent && (
                                 <div className="box">
                                     <h2>{selectedContent.resource.title}</h2>
                                     <pre>{JSON.stringify(selectedContent.resource, null, 2)}</pre>
+                                    <pre id = "insertResponse"></pre>
                                 </div>
-                            )}
+                            )} */}
+                            <pre id = "insertResponse"></pre>
                         </div>
                     </div>
 
