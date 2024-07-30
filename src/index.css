@@ -68,6 +68,21 @@ h2 {
   font-weight: bold;
 }
 
+
+.filebtn {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #588AC3;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
 .btn {
   font-family: sans-serif;
   display: inline-block;

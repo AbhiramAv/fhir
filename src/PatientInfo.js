@@ -4,9 +4,12 @@ import React, { useEffect, useState } from 'react';
 import QRForm from './QRForm';
 import formTemplate from './formTemplate.json';
 
+let myForm = formTemplate;
+
 const PatientInfo = () => {
     const [code, setCode] = useState("");
     const [accessToken, setAccessToken] = useState("");
+    const [fileContents, setFileContents] = useState('');
     const [patient, setPatient] = useState("");
     const [patientData, setPatientData] = useState({});
     const [questionnaires, setQuestionnaires] = useState([]);
@@ -154,6 +157,25 @@ const PatientInfo = () => {
         setShowResponses(!showResponses);
     };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const file = e.target.elements.fileItem.files[0];
+
+        if (file.type !== 'application/json') {
+            setFileContents(`Invalid file type: ${file.type}`);
+        } else {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                setFileContents(event.target.result);
+                const jsonData = JSON.parse(event.target.result);
+                // Process incoming JSON data here.
+                myForm = jsonData;
+                console.log(myForm);
+            };
+            reader.readAsText(file);
+        }
+    };
+
     return (
         <div className="container">
             {!code && (
@@ -215,29 +237,25 @@ const PatientInfo = () => {
                             <hr />
                         </div>
                     )}
-                    
+
                     <div className="main-content">
                         <div className="left-content">
-                            <div className="box">
-                                <h2 onClick={toggleQuestionnaires}>Questionnaires <span className="arrow">{showQuestionnaires ? 'v' : '>'}</span></h2>
-                                {showQuestionnaires && (<QRForm formToAdd={formTemplate} onSubmit={submitForm} />)}
+
+                            <div>
+                                <form id="fileForm" onSubmit={handleSubmit}>
+                                    <input type="file" name="fileItem" id="fileItem" required />
+                                    <input class = "filebtn" type="submit" value="Submit File" />
+                                </form>
                             </div>
 
-                            {/* <div className="box">
-                                <h2 onClick={toggleResponses}>Questionnaire Responses <span className="arrow">{showResponses ? 'v' : '>'}</span></h2>
-                                {showResponses && (<pre id = "insertResponse"></pre>)}
-                            </div> */}
+                            <div className="box">
+                                <h2 onClick={toggleQuestionnaires}>Questionnaires <span className="arrow">{showQuestionnaires ? 'v' : '>'}</span></h2>
+                                {showQuestionnaires && (<QRForm formToAdd={myForm} onSubmit={submitForm} />)}
+                            </div>
                         </div>
 
                         <div className="right-box">
-                            {/* {selectedContent && (
-                                <div className="box">
-                                    <h2>{selectedContent.resource.title}</h2>
-                                    <pre>{JSON.stringify(selectedContent.resource, null, 2)}</pre>
-                                    <pre id = "insertResponse"></pre>
-                                </div>
-                            )} */}
-                            <pre id = "insertResponse"></pre>
+                            <pre id="insertResponse"></pre>
                         </div>
                     </div>
 
