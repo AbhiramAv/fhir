@@ -1,207 +1,119 @@
-/* Base setup for the container and full viewport management */
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: auto; /* Allow scrolling */
-}
-
 .container {
-  position: relative;
-  min-height: 100vh; /* Allow content to grow beyond 100vh */
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Align items to the start */
-  justify-content: flex-start;
-  padding: 0;
-}
-
-/* Header styling */
-.header {
-  background-color: #1e2a36;
-  color: white;
-  width: 100%; /* Full width */
-  display: flex;
-  justify-content: center; /* Center the title horizontally */
-  align-items: center;
-  padding: 10px 20px;
-  position: fixed; /* Fixed positioning */
-  left: 0; /* Align to the left */
-  top: 0;
-  z-index: 1; /* Ensure header is above other content */
-}
-
-.header h1 {
-  font-size: 45px;
-  margin: 0;
-  color: #ffffff;
-}
-
-.logout-button {
-  position: absolute; /* Absolute positioning to the right */
-  right: 20px; /* Adjust the right position as needed */
-  padding: 8px 16px;
-  font-size: 12px;
-  background-color: #00fff7;
-  color: rgb(0, 0, 0);
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: background-color 0.3s;
-  margin-right: 30px;
-}
-
-.logout-button:hover {
-  background-color: #00fff7;
-}
-
-/* Dashboard layout */
-.dashboard {
-  display: flex;
-  width: 100%;
-  margin-top: 60px; /* Adjust for the fixed header height */
-  overflow: auto; /* Enable scrolling */
-  position: relative; /* Ensure child elements can be absolutely positioned */
-}
-
-.sidebar {
-  background-color: #003c77;
-  padding: 10px;
-  width: 250px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: fixed; /* Fixed positioning */
-  left: 0;
-  top: 60px; /* Adjust for header height */
-  bottom: 0;
-  overflow-y: auto; /* Enable scrolling */
-}
-
-.content-area {
-  margin-left: 260px; /* Adjust for sidebar width */
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
-  overflow-y: auto; /* Enable scrolling */
 }
 
-/* Button container styling */
-.button-container {
-  background-color: #ffffff;
-  padding: 20px 10px;
-  width: 250px;
+.header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  border-radius: 25px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Increased shadow */
-  margin-bottom: 20px; /* Space below the button container */
-  margin-top: 30px;
-}
-
-.sidebar-icon {
-  margin: 20px 0;
-  cursor: pointer;
-}
-
-.btn-saved-response,
-.btn-ahc-questionnaire,
-.show-details-button {
-  padding: 8px 16px;
-  font-size: 12px;
-  background-color: #00fff7;
-  color: rgb(0, 0, 0);
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  margin-bottom: 10px; /* Space between buttons */
-  transition: background-color 0.3s;
-}
-
-.btn-saved-response:hover,
-.btn-ahc-questionnaire:hover,
-.show-details-button:hover {
-  background-color: #00fff7;
-}
-
-/* Main content area */
-.main-content {
-  flex-grow: 1;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: auto; /* Ensure scrolling */
-}
-
-.patient-info {
-  background-color: #ffffff;
-  padding: 10px;
-  border-radius: 25px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-  margin-top: 40px;
-  margin-left: 5%;
-  margin-right: 5%;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-}
-
-.patient-image {
-  width: 100px; /* Adjust the size as needed */
-  height: 100px; /* Adjust the size as needed */
-  border-radius: 80px;
-  margin-bottom: 20px;
-}
-
-.resource-access-box {
-  background-color: #fff;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow: auto;
-  max-height: 300px;
-  font-size: 12px;
-  color: black;
-}
-
-.btn-info {
+  background-color: #333;
+  color: white;
   padding: 10px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.login-box {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.main-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.left-content, .right-box {
+  flex: 1;
+  min-width: 300px;
+  margin: 10px;
+}
+
+.box {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  transition: box-shadow 0.3s ease;
+}
+
+.box:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+h2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-family: Arial;
+}
+
+.arrow {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.btn {
+  font-family: sans-serif;
+  display: inline-block;
+  padding: 15px 20px;
   font-size: 16px;
   font-weight: bold;
-  color: #ffffff;
-  background-color: #17a2b8;
+  text-align: center;
+  text-decoration: none;
+  background-color: #e6355f;
+  color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s;
 }
 
-.btn-info:hover {
-  background-color: #138496;
+.btn-info {
+  background-color: #e6355f;
 }
 
-.form-container {
-  margin-top: 30px;
-  position: fixed; /* Fixed positioning */
-  right: 0; /* Align to the right */
-  top: 60px; /* Adjust for the header height */
-  width: 50%; /* Adjust as needed */
-  height: calc(100vh - 60px); /* Full height minus the header height */
-  background-color: #ffffff; /* Background color for the form container */
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* Add some shadow for better visibility */
-  border-radius: 8px 0 0 8px; /* Rounded corners on the left side */
-  overflow-y: auto; /* Enable scrolling within the form container */
-  padding: 20px; /* Add some padding for better spacing */
-  display: none; /* Initially hidden */
+.btn:hover {
+  background-color: #cc2a4e; /* Darker shade on hover */
 }
 
-/* Show form container when active */
-.form-container.active {
-  display: block;
+.btn-danger {
+  background-color: #dc3545; /* Bootstrap's danger color for contrast */
+}
+
+.access-code-box {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-align: center;
+  font-size: 12px; /* Small letters */
+  word-break: break-all; /* Ensures long words break onto the next line */
+  overflow-wrap: break-word; /* Additional support for word breaking */
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .header, .main-content {
+    flex-direction: column;
+  }
+
+  .left-content, .right-box {
+    width: 100%;
+    min-width: unset;
+  }
 }

@@ -1,11 +1,6 @@
 import axios from 'axios';
 import { oauth2 as SMART } from 'fhirclient';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import QRForm from './QRForm';
-import formTemplate from './formTemplate.json';
-import patientIcon from './humanIcon.png'; // Correctly import the image
-import './index.css'; // Adjust the path as necessary
 
 const PatientInfo = () => {
     const [code, setCode] = useState("");
@@ -13,13 +8,15 @@ const PatientInfo = () => {
     const [patient, setPatient] = useState("");
     const [patientData, setPatientData] = useState({});
     const [questionnaires, setQuestionnaires] = useState([]);
-    const [showResource, setShowResource] = useState(false);
-    const [showForm, setShowForm] = useState(false); // New state to toggle form display
+    const [questionnaireResponses, setQuestionnaireResponses] = useState([]);
+    const [selectedContent, setSelectedContent] = useState(null);
+    const [showProfile, setShowProfile] = useState(false);
+    const [showQuestionnaires, setShowQuestionnaires] = useState(false);
+    const [showResponses, setShowResponses] = useState(false);
     const clientId = "9e43034e-949f-41f5-880e-eb31a7663bee"; // Replace with your client id
     const redirect = process.env.NODE_ENV === 'production'
         ? "https://lucid-wozniak-940eae.netlify.app/callback"
         : "http://localhost:3000/callback";
-    const navigate = useNavigate();
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -27,10 +24,8 @@ const PatientInfo = () => {
         if (codeParam) {
             setCode(codeParam);
             fetchToken(codeParam);
-        } else if (!accessToken) {
-            navigate('/');
         }
-    }, [accessToken, navigate]);
+    }, []);
 
     const fetchToken = async (codeParam) => {
         const params = new URLSearchParams();
@@ -63,6 +58,7 @@ const PatientInfo = () => {
         if (accessToken && patient) {
             fetchPatientData();
             fetchQuestionnaires();
+            fetchQuestionnaireResponses();
         }
     }, [accessToken, patient]);
 
@@ -91,6 +87,18 @@ const PatientInfo = () => {
         }
     };
 
+    const fetchQuestionnaireResponses = async () => {
+        try {
+            const response = await axios.get(
+                `https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/QuestionnaireResponse`,
+                { headers: { Authorization: `Bearer ${accessToken}` } }
+            );
+            setQuestionnaireResponses(response.data.entry || []);
+        } catch (error) {
+            console.error('Error fetching questionnaire responses:', error.response ? error.response.data : error);
+        }
+    };
+
     const handleSignIn = () => {
         SMART.authorize({
             clientId: clientId,
@@ -100,101 +108,143 @@ const PatientInfo = () => {
         });
     };
 
-    const submitForm = async (filledForm) => {
-        try {
-            const response = await axios.post(
-                'https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/QuestionnaireResponse',
-                filledForm,  // Assuming filledForm is correctly structured for FHIR
-                {
-                    headers: {
-                        'Content-Type': 'application/fhir+json',
-                        'Authorization': `Bearer ${accessToken}`
-                    }
-                }
-            );
-            console.log('Submission response:', response.data);
-            alert('Form submitted successfully!');
-        } catch (error) {
-            console.error('Error submitting form:', error.response ? error.response.data : error);
-            alert('Failed to submit form.');
-        }
-    };
-
     const handleLogout = () => {
         sessionStorage.clear();
         window.location.href = redirect;
     };
 
-    const toggleResource = () => {
-        setShowResource(!showResource);
+    const handleItemClick = (item) => {
+        setSelectedContent(item);
     };
 
-    const toggleForm = () => {
-        setShowForm(!showForm);
+    const toggleProfile = () => {
+        setShowProfile(!showProfile);
     };
 
-    const displayPatientDataJSON = () => {
-        return JSON.stringify(patientData, null, 2) || '{}';
+    const toggleQuestionnaires = () => {
+        setShowQuestionnaires(!showQuestionnaires);
+    };
+
+    const toggleResponses = () => {
+        setShowResponses(!showResponses);
     };
 
     return (
         <div className="container">
-            <div className="header">
-                <h1>SMART on FHIR</h1>
-                <button className="logout-button" onClick={handleLogout}>Logout</button>
-            </div>
-            <div className="dashboard">
-                <div className="sidebar">
-                    <div className="patient-info">
-                        <img src={patientIcon} alt="Patient" className="patient-image" />
-                        <p><strong>Patient Id:</strong> {patient}</p>
-                        <p><strong>Name:</strong> {patientData.name && patientData.name[0].text}</p>
-                        <p><strong>Birth Date:</strong> {patientData.birthDate}</p>
-                        <p><strong>Gender:</strong> {patientData.gender}</p>
-                        <p><strong>Vital Status:</strong> {patientData.deceasedBoolean ? "Dead" : "Alive"}</p>
-                        {patientData.maritalStatus && <p><strong>Marital Status:</strong> {patientData.maritalStatus.text}</p>}
-                        {patientData.telecom && patientData.telecom.map((telecom, index) => (
-                            <p key={index}><strong>{telecom.system} ({telecom.use}):</strong> {telecom.value}</p>
-                        ))}
-                        {patientData.address && patientData.address.map((address, index) => (
-                            <p key={index}>
-                                <strong>Address ({address.use}):</strong> {address.line.join(', ')}, {address.city}, {address.state}, {address.postalCode}, {address.country}
-                                {address.period && address.period.start && <> from {address.period.start}</>}
-                            </p>
-                        ))}
-                        {patientData.communication && (
-                            <p><strong>Language:</strong> {patientData.communication[0].language.coding[0].display}</p>
-                        )}
-                        {patientData.generalPractitioner && (
-                            <p><strong>General Practitioner:</strong> {patientData.generalPractitioner[0].display}</p>
-                        )}
-                        {patientData.managingOrganization && (
-                            <p><strong>Managing Organization:</strong> {patientData.managingOrganization.display}</p>
-                        )}
-                    </div>
-                    <button className="show-details-button" onClick={toggleResource}>
-                        {showResource ? 'Hide Patient Data JSON' : 'Show Patient Data JSON'}
-                    </button>
-                    {showResource && (
-                        <pre className="resource-access-box">{displayPatientDataJSON()}</pre>
-                    )}
-                </div>
-                <div className="content-area">
-                    <div className="button-container">
-                        <button className="btn-saved-response">Saved Questionnaire Response</button>
-                        <button className="btn-ahc-questionnaire" onClick={toggleForm}>
-                            AHC Questionnaire
-                        </button>
-                    </div>
+            {!code && (
+                <a className="btn btn-info" href="javascript:void(0);" onClick={handleSignIn}>
+                    Sign in with Epic
+                </a>
+            )}
+
+            {accessToken && (
+                <>
+                    <header className="header">
+                        <div className="title">SMARTonFHIR</div>
+                        <div>
+                            {patientData.name && <><strong>Name: </strong>{patientData.name[0].text}<br /></>}
+                            {patientData.birthDate && <><strong>Date of Birth: </strong>{patientData.birthDate}<br /></>}
+                            {patientData.gender && <><strong>Gender: </strong>{patientData.gender}<br /></>}
+                            <button className="btn btn-info" onClick={toggleProfile}>Patient Profile</button>
+                        </div>
+                    </header>
+
                     <div className="main-content">
-                        {showForm && (
-                            <div className={`form-container ${showForm ? 'active' : ''}`}>
-                                <QRForm formToAdd={formTemplate} onSubmit={submitForm} />
+                        <div className="left-content">
+                            <div className="box">
+                                <h2 onClick={toggleQuestionnaires}>Questionnaires <span className="arrow">{showQuestionnaires ? 'v' : '>'}</span></h2>
+                                {showQuestionnaires && (
+                                    <ul>
+                                        {questionnaires.length > 0 ? (
+                                            questionnaires.map((q, index) => (
+                                                <li key={index} onClick={() => handleItemClick(q)}>
+                                                    <strong>{q.resource.title}</strong><br />
+                                                    <em>{q.resource.status}</em>
+                                                </li>
+                                            ))
+                                        ) : (
+                                            <p>No questionnaires found.</p>
+                                        )}
+                                    </ul>
+                                )}
                             </div>
-                        )}
+
+                            <div className="box">
+                                <h2 onClick={toggleResponses}>Questionnaire Responses <span className="arrow">{showResponses ? 'v' : '>'}</span></h2>
+                                {showResponses && (
+                                    <ul>
+                                        {questionnaireResponses.length > 0 ? (
+                                            questionnaireResponses.map((q, index) => (
+                                                <li key={index} onClick={() => handleItemClick(q)}>
+                                                    <strong>{q.resource.title}</strong><br />
+                                                    <em>{q.resource.status}</em>
+                                                </li>
+                                            ))
+                                        ) : (
+                                            <p>No questionnaire responses found.</p>
+                                        )}
+                                    </ul>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="right-box">
+                            {selectedContent && (
+                                <div className="box">
+                                    <h2>{selectedContent.resource.title}</h2>
+                                    <pre>{JSON.stringify(selectedContent.resource, null, 2)}</pre>
+                                </div>
+                            )}
+                        </div>
                     </div>
-                </div>
-            </div>
+
+                    {showProfile && (
+                        <div className="box patient-info">
+                            <p><strong>Patient Id:</strong> {patient}</p>
+                            {patientData.name && <><strong>Name: </strong>{patientData.name[0].text}<br /></>}
+                            {patientData.birthDate && <><strong>Birth Date: </strong>{patientData.birthDate}<br /></>}
+                            {patientData.gender && <><strong>Gender: </strong>{patientData.gender}<br /></>}
+                            {patientData.deceasedBoolean !== undefined && <><strong>Vital Status: </strong>{patientData.deceasedBoolean ? "Dead" : "Alive"}<br /></>}
+                            {patientData.maritalStatus && <><strong>Marital Status: </strong>{patientData.maritalStatus.text}<br /></>}
+                            {patientData.telecom && (
+                                <>
+                                    <strong>Telecom: </strong>
+                                    {patientData.telecom.map((telecom, index) => (
+                                        <div key={index}>
+                                            <strong>{telecom.system}</strong> - {telecom.use} {telecom.value}
+                                        </div>
+                                    ))}
+                                </>
+                            )}
+                            {patientData.address && (
+                                <>
+                                    <strong>Address: </strong>
+                                    {patientData.address.map((address, index) => (
+                                        <div key={index}>
+                                            <strong>{address.use} -</strong> {address.line.join(', ')}, {address.city}, {address.state}, {address.postalCode}, {address.country}
+                                            {address.period && address.period.start && <> <strong>From</strong> {address.period.start}</>}
+                                        </div>
+                                    ))}
+                                </>
+                            )}
+                            {patientData.communication && patientData.communication[0].language && (
+                                <><strong>Language: </strong>{patientData.communication[0].language.coding[0].display}<br /></>
+                            )}
+                            {patientData.generalPractitioner && (
+                                <><strong>General Practitioner: </strong>{patientData.generalPractitioner[0].display}<br /></>
+                            )}
+                            {patientData.managingOrganization && (
+                                <><strong>Managing Organization: </strong>{patientData.managingOrganization.display}<br /></>
+                            )}
+                            <hr />
+                        </div>
+                    )}
+
+                    <div>
+                        <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
+                    </div>
+                </>
+            )}
         </div>
     );
 };
