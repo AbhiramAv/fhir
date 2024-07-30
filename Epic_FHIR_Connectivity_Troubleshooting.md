@@ -1,4 +1,4 @@
-# Epic FHIR Server Connection Issues
+# Epic FHIR Server Connection Issues & Solutions
 
 ## Overview
 
