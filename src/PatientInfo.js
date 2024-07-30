@@ -174,31 +174,6 @@ const PatientInfo = () => {
                         </div>
                     </header>
 
-                    <div className="main-content">
-                        <div className="left-content">
-                            <div className="box">
-                                <h2 onClick={toggleQuestionnaires}>Questionnaires <span className="arrow">{showQuestionnaires ? 'v' : '>'}</span></h2>
-                                {showQuestionnaires && (<QRForm formToAdd={formTemplate} onSubmit={submitForm} />)}
-                            </div>
-
-                            {/* <div className="box">
-                                <h2 onClick={toggleResponses}>Questionnaire Responses <span className="arrow">{showResponses ? 'v' : '>'}</span></h2>
-                                {showResponses && (<pre id = "insertResponse"></pre>)}
-                            </div> */}
-                        </div>
-
-                        <div className="right-box">
-                            {/* {selectedContent && (
-                                <div className="box">
-                                    <h2>{selectedContent.resource.title}</h2>
-                                    <pre>{JSON.stringify(selectedContent.resource, null, 2)}</pre>
-                                    <pre id = "insertResponse"></pre>
-                                </div>
-                            )} */}
-                            <pre id = "insertResponse"></pre>
-                        </div>
-                    </div>
-
                     {showProfile && (
                         <div className="box patient-info">
                             <p><strong>Patient Id:</strong> {patient}</p>
@@ -240,6 +215,31 @@ const PatientInfo = () => {
                             <hr />
                         </div>
                     )}
+                    
+                    <div className="main-content">
+                        <div className="left-content">
+                            <div className="box">
+                                <h2 onClick={toggleQuestionnaires}>Questionnaires <span className="arrow">{showQuestionnaires ? 'v' : '>'}</span></h2>
+                                {showQuestionnaires && (<QRForm formToAdd={formTemplate} onSubmit={submitForm} />)}
+                            </div>
+
+                            {/* <div className="box">
+                                <h2 onClick={toggleResponses}>Questionnaire Responses <span className="arrow">{showResponses ? 'v' : '>'}</span></h2>
+                                {showResponses && (<pre id = "insertResponse"></pre>)}
+                            </div> */}
+                        </div>
+
+                        <div className="right-box">
+                            {/* {selectedContent && (
+                                <div className="box">
+                                    <h2>{selectedContent.resource.title}</h2>
+                                    <pre>{JSON.stringify(selectedContent.resource, null, 2)}</pre>
+                                    <pre id = "insertResponse"></pre>
+                                </div>
+                            )} */}
+                            <pre id = "insertResponse"></pre>
+                        </div>
+                    </div>
 
                     <div>
                         <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
