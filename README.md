@@ -1,70 +1,122 @@
-# Getting Started with Create React App
+# Project Documentation for SMARTonFHIR Patient Info App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+This documentation aims to provide a comprehensive guide on how to set up and work on the SMARTonFHIR Patient Info App. This includes steps taken to get to the current state, and all necessary documentation and references used during the development process.
 
-In the project directory, you can run:
+## Table of Contents
 
-### `npm start`
+1. [Project Setup](#project-setup)
+2. [Dependencies](#dependencies)
+3. [Component Structure](#component-structure)
+4. [Authorization with Epic FHIR](#authorization-with-epic-fhir)
+5. [Fetching Patient Data](#fetching-patient-data)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Project Setup
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. Clone the repository from GitHub:
+    ```bash
+    git clone https://github.com/your-repo/smart-on-fhir-app.git
+    cd smart-on-fhir-app
+    ```
 
-### `npm test`
+2. Install necessary dependencies:
+    ```bash
+    npm install
+    ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. Start the development server:
+    ```bash
+    npm start
+    ```
 
-### `npm run build`
+## Dependencies
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The project uses the following main dependencies:
+- `axios` for making HTTP requests.
+- `fhirclient` for SMART on FHIR authorization.
+- `react` for building the user interface.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Ensure these dependencies are installed by checking your `package.json` file.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Component Structure
 
-### `npm run eject`
+The main component is `PatientInfo.js`, which handles the authentication, data fetching, and UI rendering.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### PatientInfo.js
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. **State Variables:**
+    - `code`, `accessToken`, `patient`, `patientData`, `questionnaires`, `questionnaireResponses`, `selectedContent`, `showProfile`, `showQuestionnaires`, `showResponses`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. **Effect Hooks:**
+    - Fetch token, patient data, questionnaires, and responses upon receiving the authorization code and access token.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. **Functions:**
+    - `fetchToken`, `fetchPatientData`, `fetchQuestionnaires`, `fetchQuestionnaireResponses`, `handleSignIn`, `handleLogout`, `handleItemClick`, `toggleProfile`, `toggleQuestionnaires`, `toggleResponses`.
 
-## Learn More
+4. **UI Structure:**
+    - Header displaying patient info and profile toggle button.
+    - Main content with collapsible sections for questionnaires and responses.
+    - Detailed view section for selected questionnaire or response.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Authorization with Epic FHIR
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+SMART on FHIR authorization is handled using the `fhirclient` library. The following steps outline the process:
 
-### Code Splitting
+1. **Sign In:**
+    ```javascript
+    const handleSignIn = () => {
+        SMART.authorize({
+            clientId: clientId,
+            scope: "launch/patient openid fhirUser patient/*.read Questionnaire.read Questionnaire.search QuestionnaireResponse.read QuestionnaireResponse.create QuestionnaireResponse.search Patient.read Patient.search Patient.create",
+            redirectUri: redirect,
+            iss: "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/"
+        });
+    };
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+2. **Fetch Token:**
+    ```javascript
+    const fetchToken = async (codeParam) => {
+        const params = new URLSearchParams();
+        params.append('grant_type', 'authorization_code');
+        params.append('redirect_uri', redirect);
+        params.append('code', codeParam);
+        params.append('client_id', clientId);
 
-### Analyzing the Bundle Size
+        const config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        };
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+        try {
+            const response = await axios.post(
+                'https://fhir.epic.com/interconnect-fhir-oauth/oauth2/token',
+                params,
+                config
+            );
+            setAccessToken(response.data.access_token);
+            setPatient(response.data.patient);
+        } catch (error) {
+            console.error('Authorization error:', error.response ? error.response.data : error);
+        }
+    };
+    ```
 
-### Making a Progressive Web App
+## Fetching Patient Data
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Patient data is fetched using the Epic FHIR API. Here’s the function to fetch patient data:
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```javascript
+const fetchPatientData = async () => {
+    try {
+        const response = await axios.get(
+            `https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Patient/${patient}`,
+            { headers: { Authorization: `Bearer ${accessToken}` } }
+        );
+        setPatientData(response.data);
+    } catch (error) {
+        console.error('Error fetching patient data:', error.response ? error.response.data : error);
+    }
+};
