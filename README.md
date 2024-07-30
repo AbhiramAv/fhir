@@ -120,3 +120,37 @@ const fetchPatientData = async () => {
         console.error('Error fetching patient data:', error.response ? error.response.data : error);
     }
 };
+```
+## Fetching Questionnaires and Responses
+
+Similar to fetching patient data, questionnaires and their responses are fetched as follows:
+
+```javascript
+const fetchQuestionnaires = async () => {
+    try {
+        const response = await axios.get(
+            `https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/Questionnaire`,
+            { headers: { Authorization: `Bearer ${accessToken}` } }
+        );
+        setQuestionnaires(response.data.entry || []);
+    } catch (error) {
+        console.error('Error fetching questionnaires:', error.response ? error.response.data : error);
+    }
+};
+
+const fetchQuestionnaireResponses = async () => {
+    try {
+        const response = await axios.get(
+            `https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/QuestionnaireResponse`,
+            { headers: { Authorization: `Bearer ${accessToken}` } }
+        );
+        setQuestionnaireResponses(response.data.entry || []);
+    } catch (error) {
+        console.error('Error fetching questionnaire responses:', error.response ? error.response.data : error);
+    }
+};
+```
+## References and Resources
+1. [SMART on FHIR Authorization](https://hl7.org/fhir/smart-app-launch/1.0.0/)
+2. [FHIR API](https://fhir.epic.com/)
+
